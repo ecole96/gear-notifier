@@ -197,6 +197,7 @@ class GuitarCenter:
         while keepSearching:
             #url = self.baseURL + "/search?typeAheadSuggestion=false&typeAheadRedirect=false&recsPerPage=90&Nao=" + str(i * 90) + price_query_str + "&Ntt=" + urlparse.quote_plus(entry.query)
             soup = download(url)
+            print(soup)
             if not soup.select_one("section[id=zeroResultsContent]"):
                 products = soup.select("li.product-container")
                 for p in products:
