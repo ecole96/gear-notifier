@@ -10,7 +10,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('email','craigslist_sites','phone','carrier','communication_settings')
         widgets = {
-            'craigslist_sites': forms.SelectMultiple()
+            'craigslist_sites': forms.SelectMultiple(attrs={'size': 10})
         }
 
     def clean_phone(self):
