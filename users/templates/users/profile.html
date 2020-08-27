@@ -1,0 +1,52 @@
+{% extends "gn_manager/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block head %}
+    <script src="https://kit.fontawesome.com/93f7103c50.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'gn_manager/manager.css' %}">
+{% endblock %}
+{% block content %}
+    <script>
+        function clickResendActivation(id){
+            var button = document.getElementById(id);
+            button.disabled = true;
+            button.innerHTML = "Sending...";
+            var url_mask = "{% url 'resend_verification' mode=0 %}".replace(0, id.toString());
+            $.get(url_mask, function(data,status){
+                    if(status == 'success') {
+                        button.className = "btn btn-success";
+                        button.innerHTML = "Sent";
+                    }
+                    else {
+                        button.className = "btn btn-danger";
+                        button.innerHTML = "Failed to Send";
+                    }
+                });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".del").modalForm({
+                formURL: "{% url 'delete_account' %}"
+            });
+        });
+    </script>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class='form-group'>
+            <legend class="border-bottom mb-4">Profile</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <div class='form-group'>
+            <button class="btn btn-primary" type="submit">Apply Changes</button>
+            <a href="{% url 'change_password' %}"><button class="change_password btn btn-info" type="button" name="button">Change Password</button></a>
+            <button class="del btn btn-danger" type="button" name="button">Delete Account</button>
+        </div>
+    </form>
+{% endblock content %}

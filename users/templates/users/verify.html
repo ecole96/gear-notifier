@@ -1,0 +1,4 @@
+{% autoescape off %}
+To activate your account/device for use with Gear Notifier, please navigate to the following URL:
+http://{{ domain }}{% url 'activate' uidb64=uid token=token mode=mode %}
+{% endautoescape %}

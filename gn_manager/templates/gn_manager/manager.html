@@ -1,0 +1,33 @@
+{% extends "gn_manager/base.html" %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% block head %}
+    <script src="https://kit.fontawesome.com/93f7103c50.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'gn_manager/manager.css' %}">
+{% endblock %}
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".create").modalForm({
+                formURL: "{% url 'create' %}"
+            });
+            $(".edit").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            $(".delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+        });
+    </script>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    <br>
+    <button class="create btn btn-primary" type="button" name="button">Add Entry</button><br><br>
+    <div class="bg-light">
+        {% render_table table %}
+    </div>
+{% endblock content %}

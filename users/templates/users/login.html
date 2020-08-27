@@ -1,0 +1,37 @@
+{% extends "gn_manager/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="home-header jumbotron center" style="background-color:#6E23BC">
+        <h1 class='display-4'>Gear Notifier</h1>
+        <p class='lead'>Be notified when used music gear you're interested in appears on Reverb, Guitar Center, and Craigslist, so you'll never miss a good deal!</p>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class='alert alert-{{ message.tags }}'>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" name="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Log In</button>
+        </div>
+        <input type="hidden" name="next" value="{{ request.GET.next }}" />
+    </form>
+    <small class='text-muted'>
+        <a href="{% url 'reset_password' %}">Forgot My Password</a>
+    </small><br>
+    <small class='text-muted'>
+        Don't have an account? <a class="ml-2" href="{% url 'register' %}">Register</a>
+    </small><br><br>
+    <footer class='bg-info text-center'>Developed by <a href="https://github.com/ecole96" style="color:white">Evan Cole</a>, 2020</footer>
+{% endblock content %}

@@ -1,0 +1,11 @@
+.modal-content {
+    background-color:#212b31;
+}
+
+button[data-dismiss="modal"] {
+    color:white;
+}
+
+.close:hover {
+    color:red;
+}
