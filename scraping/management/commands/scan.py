@@ -202,6 +202,7 @@ class GuitarCenter:
                 for p in products:
                     pt = p.select_one("div.productTitle a")
                     title = pt.text.strip()
+                    print(title)
                     listing_url = self.baseURL + pt['href'].replace(' ','+')
                     pr = p.select_one("span.productPrice")
                     for span in pr.select("span"): span.decompose()
