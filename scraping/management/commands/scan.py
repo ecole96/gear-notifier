@@ -195,15 +195,12 @@ class GuitarCenter:
         keepSearching = True
         while keepSearching:
             #url = self.baseURL + "/search?typeAheadSuggestion=false&typeAheadRedirect=false&recsPerPage=90&Nao=" + str(i * 90) + price_query_str + "&Ntt=" + urlparse.quote_plus(entry.query)
-            print(url)
             soup = download(url)
-            print(soup)
             if not soup.select_one("section[id=zeroResultsContent]"):
                 products = soup.select("li.product-container")
                 for p in products:
                     pt = p.select_one("div.productTitle a")
                     title = pt.text.strip()
-                    print(title)
                     listing_url = self.baseURL + pt['href'].replace(' ','+')
                     pr = p.select_one("span.productPrice")
                     for span in pr.select("span"): span.decompose()
