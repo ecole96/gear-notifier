@@ -49,7 +49,7 @@ class Command(BaseCommand):
                 print("Aborting scan for",user.email,"due to error:",e)
 
 def download(url):
-    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36'
+    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36'
     request = requests.get(url,headers={'User-Agent':user_agent})
     page = request.content
     soup = BeautifulSoup(page, 'html.parser')
@@ -189,13 +189,13 @@ class GuitarCenter:
     baseURL = "https://www.guitarcenter.com"
 
     def search(self,entry):
-        i = 0
         listings = []
         #price_query_str = self.generate_price_criteria(entry.min_price,entry.max_price)
         url = self.baseURL + "/search?typeAheadSuggestion=false&typeAheadRedirect=false&Ntt=" + urlparse.quote_plus(entry.query)
         keepSearching = True
         while keepSearching:
             #url = self.baseURL + "/search?typeAheadSuggestion=false&typeAheadRedirect=false&recsPerPage=90&Nao=" + str(i * 90) + price_query_str + "&Ntt=" + urlparse.quote_plus(entry.query)
+            print(url)
             soup = download(url)
             print(soup)
             if not soup.select_one("section[id=zeroResultsContent]"):
@@ -267,7 +267,7 @@ class Craigslist():
         if entry.min_price is not None:
             url_query += "&min_price=" + str(math.floor(entry.min_price))
         if entry.max_price is not None:
-            url_query += "&max_price=" + str(math.floor(entry.max_price))
+            url_query += "&max_price=" + str(math.ceil(entry.max_price))
         for location in cl_locs:
                 url = "https://" + location + "." + self.baseURL + url_query
                 rss = feedparser.parse(url)
