@@ -205,6 +205,7 @@ class GuitarCenter:
                     pr = p.select_one("span.productPrice")
                     for span in pr.select("span"): span.decompose()
                     price = float(pr.text.strip().replace(',',''))
+                    print(title,listing_url,price)
                     if not((entry.min_price is not None and price < entry.min_price) or (entry.max_price is not None and price > entry.max_price)):
                         listing = Listing(title,price,None,listing_url)
                         listings.append(listing)
