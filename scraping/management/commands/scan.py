@@ -24,6 +24,7 @@ class Command(BaseCommand):
         misc = Misc.objects.first() if Misc.objects.first() else Misc()
         lastrun_dt = misc.lastrun_dt.replace(tzinfo=None)
         misc.save()
+        print(lastrun_dt)
         users = User.objects.filter(is_active=True)
         rv = Reverb(os.environ['REVERB_API'])
         gc = GuitarCenter()
@@ -272,6 +273,7 @@ class Craigslist():
                 products = rss.entries
                 for p in products:
                     listing_dt = convert_datetime(p['published'])
+                    print(listing_dt)
                     if listing_dt < lastrun_dt: 
                         break
                     t = re.match(r'(^.+?)(?= &#x0024;(\d+)|$)',p['title'].strip()).groups()
