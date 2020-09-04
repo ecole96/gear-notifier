@@ -171,6 +171,7 @@ class Reverb:
             json = r.json()
             for l in json['listings']:
                 listing_dt = convert_datetime(l['created_at'])
+                print(l)
                 if listing_dt < lastrun_dt:
                     keepSearching = False
                     break
@@ -197,6 +198,7 @@ class GuitarCenter:
         while keepSearching:
             #url = self.baseURL + "/search?typeAheadSuggestion=false&typeAheadRedirect=false&recsPerPage=90&Nao=" + str(i * 90) + price_query_str + "&Ntt=" + urlparse.quote_plus(entry.query)
             soup = download(url)
+            print(soup)
             if not soup.select_one("section[id=zeroResultsContent]"):
                 products = soup.select("li.product-container")
                 for p in products:
@@ -272,6 +274,7 @@ class Craigslist():
                 rss = feedparser.parse(url)
                 products = rss.entries
                 for p in products:
+                    print(p)
                     listing_dt = convert_datetime(p['published'])
                     print(listing_dt)
                     if listing_dt < lastrun_dt: 
